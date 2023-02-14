@@ -1,10 +1,13 @@
 var db = require('../config/connection')
 var collection = require('../config/collections')
 const bcrypt = require('bcrypt');
-
-
-
 var ObjectId = require('mongodb').ObjectId
+//var instance = new Razorpay({
+    //key_id: 'YOUR_KEY_ID',                           //razorpay instance
+   // key_secret: 'YOUR_KEY_SECRET',
+ // });
+
+
 module.exports = {
     dosignup: (userData) => {
         return new Promise(async (resolve, reject) => {
@@ -256,11 +259,71 @@ module.exports = {
 
 
             ]).toArray()
-            console.log(total[0].total)
+         // console.log(total[0].total)
             resolve(total[0].total)
         })
-    }
+    },
 
+
+
+    Order:(order,books,total,userId)=>{
+        return new Promise((resolve,reject)=>{
+            console.log(order,books,total);
+
+            let status=order.payment === 'COD'  ?   'placed':'pending'
+            let orderObj={
+                details:{
+                    address:order.address,
+                    place:order.place,
+                    pincode:order.pincode,
+                    phone:order.phone
+                },
+
+                userId:ObjectId(order.userId) ,
+                payment:order.payment,
+                books:books,
+                total:total,
+                status:status,
+                date:new Date()
+            }
+  
+         db.get().collection(collection.ORDER_COLLECTS).insertOne(orderObj).then((response)=>{
+
+            db.get().collection(collection.CART_COLLECTS).deleteOne({user:ObjectId(userId)})
+              
+
+            resolve(response.ops[0]._id)   //order id
+         })
+        })
+
+    },
+
+
+    getcartBookList:(userId)=>{
+        return new Promise(async(resolve,reject)=>{
+            let cart=await db.get().collection(collection.CART_COLLECTS).findOne({user:ObjectId(userId)})
+                resolve(cart.books)
+           
+          
+        })
+    },
+
+
+    getuserOrders:(userId)=>{
+        return new Promise(async(resolve,reject)=>{
+            console.log(userId)
+            let orders=await db.get().collection(collection.ORDER_COLLECTS).find({user:ObjectId(userId)}).toArray()
+            console.log(orders);
+            resolve(orders)
+
+         
+
+         })
+    },
+
+
+
+  
 }
 
 

@@ -1,6 +1,6 @@
-<body>
+
   <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light p-3">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light p-1">
       <div class="container-fluid">
         <a class="navbar-brand text-danger ms-4" href="/">EBOOK STORE</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -8,11 +8,11 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-5 ml-3 ms-4  mb-lg-0">
-            <li class="nav-item ms-3 p-2">
+          <ul class="navbar-nav me-auto mb-5 me-2 ms-2 mb-lg-0">
+            <li class="nav-item ms-auto p-2">
               <a class="nav-link active text-dark" aria-current="page" href="/">Home</a>
             </li>
-            <li class="nav-item dropdown ms-3 p-2">
+            <li class="nav-item dropdown ms-2 p-2">
               <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
                 data-bs-toggle="dropdown" aria-expanded="true">
                 Categories
@@ -32,16 +32,16 @@
               <a class="nav-link active text-dark" href="#">About</a>
             </li>
           </ul>
-          <form class="d-flex me-6 me-auto text-dark">
-            <input class="form-control me-2 col-md-4 p-2" type="search" placeholder="Search by title,author,series"
+          <form class="d-flex me-auto text-dark">
+            <input class="form-control ms-auto col-md-4 p-2" type="search" placeholder="Search by title,author,series"
               aria-label="Search">
-            <button class="btn btn-danger" type="submit">Search</button>
+            <button class="btn btn-danger ms-2" type="submit">Search</button>
 
           </form>
 
           <ul class="navbar-nav ms-auto mb-5 ml-3 ms-4  mb-lg-0">
             <li class="nav-item ms-3">
-              <a class="nav-link active text-white btn btn-danger me-3" href="/cart">Cart<span class="badge text-bg-secondary" id="cart-count">{{cartcount}}</span></a>
+              <a class="nav-link active text-white btn btn-danger me-1" href="/cart">Cart<span class="badge text-bg-secondary" id="cart-count">{{cartcount}}</span></a>
             </li>
 
           </ul>
@@ -81,7 +81,7 @@
 
   </header>
   <section>
-    <div class="container">
+    <div class="container col-lg-12 ">
 
 
       <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">

@@ -1,6 +1,6 @@
 <section>
     <div class="container mt-5">
-        <form action="" method="" id="checkout-form">
+        <form action=""  id="checkout-form">
             <div class="row">
                 <div class="col-md-8">
                     <h2 class="mt-3 justify-align-center">Product Order Form</h2><br>
@@ -16,7 +16,7 @@
 
 
                         <label for="">Phone</label>
-                        <input type="text" class="form-control mt-2 d-flex" id="moblic" name="moblie">
+                        <input type="text" class="form-control mt-2 " id="phone" name="phone">
 
                          <input type="text" name="userId" id="" value="{{user._id}}" hidden>
                      </div>
@@ -80,18 +80,21 @@
 </style>
 
 <script>
-    $("#checkout-form").submit((e) => {
+ 
+    
+$("#checkout-form").submit((e) => {
     e.preventDefault()
     $.ajax({
         url: '/order',
         method: 'post',
-        data: $('#checkout-form').serialize,   //serialize -- acess form data
+        data:$('#checkout-form').serialize(),                                 //-- acess form data
         success: (response) => {
-            alert(response)
+            if(response.status){
+                location.href='/order-success'
+            }
         }
     })
 })
 
 
-    
-</script>
+</script

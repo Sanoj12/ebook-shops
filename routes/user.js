@@ -128,17 +128,38 @@ router.post('/remove-book',(req,res)=>{
     })
 })
 
-router.get('/order',verifylogin,async(req,res)=>{
-      let total= await userController.getTotalPrice(req.session.user._id)
+router.get('/order',async(req,res)=>{
+     let total= await userController.getTotalPrice(req.session.user._id)
       res.render('user/order',{total,user:req.session.user})
 })
 
-router.post('/order',(req,res)=>{
-      
-      console.log(req.body)
+router.post('/order',async(req,res)=>{
+
+      let books= await userController.getcartBookList(req.body.userId)
+      let total= await userController.getTotalPrice(req.body.orderId)
+      userController.Order(req.body,books,total).then((response)=>{
+            // if(req.body[payment] =='COD'){
+            //       res.json({status:true})
+            // }else{
+            //          userController.generateRazorpay(orderId).then((response)=>{
+
+            //          })
+            // }
+           
+
+      })
+      console.log(req.body);
 })
 
+router.get('/order-success',(req,res)=>{
+      res.render('user/order-success',{user:req.session.user})
+})
 
+router.get('/orders',async(req,res)=>{
+      let Orders=await userController.getuserOrders(req.session.user._id)
+     
+      res.render('user/orders',{user:req.session.user,Orders})
+})
 
 
 router.get('/blog', function (req, res) {
