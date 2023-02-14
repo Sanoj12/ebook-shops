@@ -1,0 +1,29 @@
+{{>user-header}}
+<section>
+        <div class="container mt-5">
+            <div class="row">
+
+
+                <h3 class="text-center">Best sellers</h3>
+                {{#each books}}
+
+                <div class="col-md-3 p-3">
+                    <div class="card" style="width: 18rem;">
+                          <img src="{{this.image}}"
+                             alt="..." style="height:15rem;">
+                        <div class="card-body">
+                            <h3 class="card-title text-center">{{this.title}}</h4>
+                            <p class="card-text text-center">{{this.authorname}}</p>
+                            <h4 class="card-text text-center">{{this.category}}</h4>
+                                <h3 class="card-text text-center">{{this.price}}</h3>
+                            <a href="user/cart" class="btn btn-danger text-center justify-content-center">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+
+        </div>
+    </section>
+ {{>footer}}

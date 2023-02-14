@@ -1,0 +1,43 @@
+{{>admin-header}}
+
+<section>
+    <div class="container">
+        <div class="row mt-5 content-justify-center">
+            <div class="row">
+                <a href="admin/add-books" class="btn btn-danger me-auto ">ADD NEW BOOKS</a>
+            </div>
+            <table class="table mt-2">
+                <thead>
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Author Name</th>
+                        <th scope="col">Category</th>
+
+                        <th scope="col">Price</th>
+                        <th scope="col">Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each books}}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>{{this.title}}</td>
+                        <td>{{this.authorname}}</td>
+                        <td>{{this.category}}</td>
+                        <td>{{this.price}}</td>
+                     
+                       <td><img style="width:50px; height:70px;" src="./book-images/{{this._id}}.jpg" alt=""></td>
+
+                       <td>
+                         <a href="/admin/edit-books/{{this._id}}" class="btn btn-danger m-2">EDIT</a>
+                         <a href="/admin/delete-book/{{this._id}}" class="btn btn-danger" onclick=" return confirm('Are you sure to delete {{this.title}} ?')">DELETE</a>
+                       </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</section>

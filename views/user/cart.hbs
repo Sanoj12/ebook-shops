@@ -1,0 +1,51 @@
+
+
+<section>
+
+    <div class="container mt-5">
+        <table class="table mt-5">
+            <thead>
+                <tr>
+                    
+                    <th scope="col">Item</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                   {{#each books}}
+                <tr>
+                  
+                    <td><img src="/book-images/{{this.book._id}}.jpg" alt="" class="card-img-top p-2" style="width:100px;height:100px"></td>
+                    <td>{{this.book.title}}</td>
+                    <td>RS.{{this.book.price}}</td>
+                   
+                    <td>
+                        <button class="car-item-count mr-3 btn btn-danger" onclick="changeQuantity('{{this._id}}','{{this.book._id }}''{{../user}}',-1)">-</button> 
+                           
+                                   <span id="{{this.book._id}}"> {{this.quantity}} </span> 
+
+                         <button class="cart-item-count mr-3 btn btn-danger" onclick="changeQuantity('{{this._id}}','{{this.book._id }}','{{../user}}',1)">+</button>
+                    </td>
+                    <td>
+                        <a href="" class="btn btn-danger mr-3" onclick="removebook('{{this._id}}','{{this.book._id }}')">Remove</a>
+                    </td>
+                </tr>
+
+                {{/each}}
+            </tbody>
+        </table>
+
+        <hr>
+
+       <div class="float-end">
+             <h3 class="float-end  mr-4">Total: Rs. <span class="" id="total">{{totalvalue}}</span></h3><br>
+
+           <a href="/order" class="float-end ml-6 mt-3 btn btn-danger" style="width:80%">Order</a>
+       </div>
+      
+
+    </div>
+
+</section>
