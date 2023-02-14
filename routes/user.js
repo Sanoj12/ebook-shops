@@ -117,6 +117,7 @@ router.get('/add-to-cart/:id',(req, res) => {
 router.post('/change-book-quantity',(req,res,next)=>[
       userController.changeBookQuantity(req.body).then(async(response)=>{
             response.total= await userController.getTotalPrice(req.body.user)
+           // console.log(req.body);
             res.json(response)
             
       })
@@ -128,9 +129,9 @@ router.post('/remove-book',(req,res)=>{
     })
 })
 
-router.get('/order',async(req,res)=>{
+router.get('/order',verifylogin,async(req,res)=>{
      let total= await userController.getTotalPrice(req.session.user._id)
-      res.render('user/order',{total,user:req.session.user})
+      res.render('user/order',{user:req.session.user,total})
 })
 
 router.post('/order',async(req,res)=>{
@@ -139,7 +140,7 @@ router.post('/order',async(req,res)=>{
       let total= await userController.getTotalPrice(req.body.orderId)
       userController.Order(req.body,books,total).then((response)=>{
             // if(req.body[payment] =='COD'){
-            //       res.json({status:true})
+                 res.json({status:true})
             // }else{
             //          userController.generateRazorpay(orderId).then((response)=>{
 
@@ -155,12 +156,17 @@ router.get('/order-success',(req,res)=>{
       res.render('user/order-success',{user:req.session.user})
 })
 
-router.get('/orders',async(req,res)=>{
-      let Orders=await userController.getuserOrders(req.session.user._id)
-     
-      res.render('user/orders',{user:req.session.user,Orders})
+router.get('/orders',verifylogin,async(req,res)=>{
+      let orders=await userController.getuserOrders(req.session.user._id)
+      console.log(req.body);
+      res.render('user/orders',{user:req.session.user,orders})
 })
 
+
+router.post('/view-order-books/:id',async(req,res)=>{
+      let books=await userController.getorderbooks(req.params.id)
+      res.render('user/view-order-books',{user:req.session.user,books})
+})
 
 router.get('/blog', function (req, res) {
       res.render('user/blog')

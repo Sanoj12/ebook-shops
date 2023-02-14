@@ -182,9 +182,9 @@ module.exports = {
 
                         }
 
-                    ).then(() => {
+                    ).then((response) => {
 
-                        resolve({status:true})
+                        resolve(true)
 
                     })
 
@@ -259,8 +259,8 @@ module.exports = {
 
 
             ]).toArray()
-         // console.log(total[0].total)
-            resolve(total[0].total)
+          // console.log(total)
+            resolve(total[0])
         })
     },
 
@@ -292,7 +292,7 @@ module.exports = {
             db.get().collection(collection.CART_COLLECTS).deleteOne({user:ObjectId(userId)})
               
 
-            resolve(response.ops[0]._id)   //order id
+            resolve(response)   //order id
          })
         })
 
@@ -321,9 +321,55 @@ module.exports = {
          })
     },
 
+    getorderBooks:(orderId)=>{
+        return new Promise(async (resolve, reject) => {
+            let orderItems = await db.get().collection(collection.CART_COLLECTS).aggregate([
+                {
+                    $match: { user: ObjectId(orderId) }
+                },
+
+                {
+
+                    $unwind: '$books'
+
+                },
+                {
+
+                    $project: {
+                        item: '$books.item',                     //array
+
+                        quantity: '$books.quantity'
+                    }
+
+                },
+                {
+                    $lookup:
+                    {
+                        from: collection.BOOK_COLLECTS,
+                        localField: 'item',
+                        foreignField: '_id',
+                        as: 'book'
+                    }
+
+                },
+                {
+                    $project: {
+                        item: 1, quantity: 1, book: { $arrayElemAt: ['$book', 0] }        //array to object
+                    }
+                }
+
+            ]).toArray()
+
+            resolve(orderItems)
+        })
+    }
+
+}
+       
+
 
 
   
-}
+
 
 
