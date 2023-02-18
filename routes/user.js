@@ -71,7 +71,13 @@ router.post('/signup', (req, res) => {
 
 
 router.get('/login', function (req, res) {
-      res.render('user/login')
+      if(req.session.loggedIn){
+            res.redirect('/')
+      }else{
+            res.render('user/login',{"loggedError":req.session.loggedError})
+            req.session.loggedError=false
+      }
+     
 })
 router.post('/login', (req, res) => [
       userController.dologin(req.body).then((response) => {
@@ -82,7 +88,8 @@ router.post('/login', (req, res) => [
                   req.session.user = response.user
                   res.redirect('/')
             } else {
-                  res.redirect('/login')
+                  req.session.loggedError="please fill your vaild username or password"
+                  res.redirect('/login',)
             }
 
       })
