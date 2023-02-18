@@ -6,8 +6,12 @@
 
             <h3 class="text-center ">LOGIN</h3>
             <form action="/login" method="post">
-         {{#if logginError}}
-            <p class="error text-danger">{{logginError}}</p>
+         {{#if loggedError}}
+            <p class="error text-danger">{{loggedError}}</p>
+
+            {{else}}
+        
+                
         {{/if}}
 
                 <div class="form-group ">

@@ -19,74 +19,143 @@
 
 
 
-
-    <div class="main2 bg-light">
-        <div class="container ">
-            <div class="row">
-                <div class="col-12 ">
-                    <h3 class="text-center p-5">Best sellers</h3>
-                </div>
-                {{#each books}}
-
-                <div class="col-md-3 p-2">
-
-
-
-                    <div class="card p-2 pt-auto d-flex text-center border-1 border-danger" style="width: 220px; height: 560px;">
-                        <img src="/book-images/{{this._id}}.jpg" class="card-img-top " alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title mt=2">{{this.title}}</h5>
-                            <p class="card-title">{{this.authorname}}</p>
-                            <p class="card-title">{{this.category}}</p>
-                            <p class="card-text">{{this.description}}</p>
-
-                            <h4 class="card-title text-danger">Rs.{{this.price}}/-</h4>
-
-                            <button onclick="addcartcount('{{this._id}}')" class="btn btn-danger">Add to cart</button>
-                        </div>
-                    </div>
-                </div>
-                {{/each}}
-            </div>
+  <hr>
+  <div class="main2 bg-light">
+    <div class="container ">
+      <div class="row">
+        <div class="col-12 ">
+          <h3 class="text-center p-5">Best sellers</h3>
         </div>
+        {{#each books}}
+
+        <div class="col-md-3 pt-4">
+
+
+
+          <div class="card p-3 pt-auto d-flex text-center border-1 border-danger" style=" height: auto;">
+            <img src="/book-images/{{this._id}}.jpg" class="card-img-top" alt="..."
+              style="height:200px; width:150px;" id="img">
+            <div class="card-body">
+              <h5 class="card-title mt=2">{{this.title}}</h5>
+              <p class="card-title">{{this.authorname}}</p>
+              <p class="card-title">{{this.category}}</p>
+              <p class="card-text">{{this.description}}</p>
+
+              <h4 class="card-title text-danger">Rs.{{this.price}}/-</h4>
+
+              <button onclick="addcartcount('{{this._id}}')" class="btn btn-danger " id="add-to-cart">Add to
+                cart</button>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+
+      <div class="text-center mt-2">
+        <a href="" class="btn btn-danger btn-sm  mb-4" id="view-all">View All</a>
+      </div>
     </div>
-   
-   
+  </div>
+
+
 
 
 </section>
 
 <style>
-    .main1{
-     height: 500px;
-     width: 100%;
-     background-image: url('book-images/books-1163695__480.jpg');
+  .main1 {
+    height: 500px;
+    width: 100%;
+    background-image: url('book-images/books-1163695__480.jpg');
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+  }
+
+
+  .main1 h1 {
+    font-size: 50px;
+    font-weight: 200;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    justify-items: center;
+    margin-top: 180px;
+    margin-left: 230px;
+    color: white;
+    margin-top: 235pxx;
+  }
+
+  .main1 .button {
+    border-radius: 25px;
+    margin-left: 500px;
+    margin-top: 20px;
+
+  }
+
+  #view-all {
+    margin-top: 20px;
+    border: 1px soild;
+    background-color: white;
+    color: #334;
+    cursor: pointer;
+
+
+  }
+
+  #view-all:hover {
+    background-color: crimson;
+    border-color: crimson;
+    color: #fff;
+
+
+  }
+
+  #add-to-cart {
+    margin-top: 20px;
+    border: 1px soild;
+    background-color: white;
+    color: #334;
+    cursor: pointer;
+    border-radius: 20px;
+
+  }
+
+
+  #add-to-cart:hover{
+       background-color: crimson;
+    border-color: crimson;
+    color: #fff;
     
-     background-position: center;
-     background-repeat: no-repeat;
-     background-size: cover;
+  }
 
-   }
-
-
-   .main1 h1 {
-     font-size: 50px;
-     font-weight: 200;
-     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-     justify-items: center;
-     margin-top: 180px;
-     margin-left:230px;
-     color: white;
-     margin-top: 235pxx;
-   }
- 
-   .main1 .button{
-      border-radius: 25px;
-      margin-left: 500px;
-      margin-top: 20px;
-
-   } 
-
+  #img{
+     align-items: center;
+     padding-left: 10px;
+     margin-left: 30px;
+  }
 </style>
+
+
+
+<script>
+     let viewallbtn =document.querySelector('#view-all');
+     let currentItem=4;
+
+
+     viewallbtn.onclick=()=>{
+        let boxes=[...document.querySelectorAll('.main2 .container .row')];
+        for(var i = currentItem; i < currentItem + 4; i++){
+          boxes[i].style.display='inline-block'
+        }
+        
+        currentItem+=4;
+        if(currentItem>=boxes.length){
+           viewallbtn.style.display="none"
+
+        }
+
+     }
+</script>
 
 {{>footer}}

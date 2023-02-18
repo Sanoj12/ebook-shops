@@ -84,7 +84,7 @@ router.post('/login', (req, res) => [
 
             if (response.status) {
 
-                  req.session.loggedIn = true
+                  req.session.loggedIn = "Login Success"
                   req.session.user = response.user
                   res.redirect('/')
             } else {
@@ -107,7 +107,7 @@ router.get('/cart',verifylogin,async(req, res) => {
     console.log(req.body);
       console.log(books)
          
-      res.render('user/cart',{books,user:req.session.user,totalvalue})
+      res.render('user/cart',{books,'user':req.session.user,totalvalue})
 })
 
 
@@ -149,6 +149,7 @@ router.post('/order',async(req,res)=>{
             // if(req.body[payment] =='COD'){
                  res.json({status:true})
             // }else{
+                  //console.log(req.body)
             //          userController.generateRazorpay(orderId).then((response)=>{
 
             //          })
@@ -163,9 +164,10 @@ router.get('/order-success',(req,res)=>{
       res.render('user/order-success',{user:req.session.user})
 })
 
-router.get('/orders',verifylogin,async(req,res)=>{
+router.get('/orders',async(req,res)=>{
       let orders=await userController.getuserOrders(req.session.user._id)
-      console.log(req.body);
+      console.log('---',orders);
+   
       res.render('user/orders',{user:req.session.user,orders})
 })
 
@@ -180,6 +182,12 @@ router.get('/blog', function (req, res) {
 })
 router.get('/john-book', function (req, res) {
       res.render('user/john-book')
+})
+
+
+router.get('/contact',function(req,res) {
+       res.render('user/contact')
+      
 })
 
 module.exports = router;

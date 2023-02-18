@@ -33,6 +33,7 @@ module.exports = {
                 bcrypt.compare(userData.password, user.password).then((status) => {
                     if (status) {
                         console.log("login success")
+                       // alert("success")
                         response.user = user
                         response.status = true
                         resolve(response)
@@ -125,13 +126,13 @@ module.exports = {
                         from: collection.BOOK_COLLECTS,
                         localField: 'item',
                         foreignField: '_id',
-                        as: 'book'
+                        as: 'books'
                     }
 
                 },
                 {
                     $project: {
-                        item: 1, quantity: 1, book: { $arrayElemAt: ['$book', 0] }        //array to object
+                        item: 1, quantity: 1, book: { $arrayElemAt: ['$books', 0] }        //array to object
                     }
                 }
 
@@ -184,7 +185,7 @@ module.exports = {
 
                     ).then((response) => {
 
-                        resolve(true)
+                        resolve({status:true})
 
                     })
 
@@ -237,13 +238,13 @@ module.exports = {
                         from: collection.BOOK_COLLECTS,
                         localField: 'item',
                         foreignField: '_id',
-                        as: 'book'
+                        as: 'books'
                     }
 
                 },
                 {
                     $project: {
-                        item: 1, quantity: 1, book: { $arrayElemAt: ['$book', 0] }        //array to object
+                        item: 1, quantity: 1, book: { $arrayElemAt: ['$books', 0] }        //array to object
                     }
                 },
 
@@ -259,20 +260,21 @@ module.exports = {
 
 
             ]).toArray()
-          // console.log(total)
-            resolve(total[0])
+        //console.log(total)
+            resolve(total.length > 0 ? total[0].total:0)
         })
     },
 
 
 
     Order:(order,books,total,userId)=>{
+    
         return new Promise((resolve,reject)=>{
             console.log(order,books,total);
 
-            let status=order.payment === 'COD'  ?   'placed':'pending'
+            let status=order.payment === 'COD'  ?   'placed':'pending'          //using conditional operator
             let orderObj={
-                details:{
+                deliveryDetails:{
                     address:order.address,
                     place:order.place,
                     pincode:order.pincode,
@@ -289,10 +291,10 @@ module.exports = {
   
          db.get().collection(collection.ORDER_COLLECTS).insertOne(orderObj).then((response)=>{
 
-            db.get().collection(collection.CART_COLLECTS).deleteOne({user:ObjectId(userId)})
+            //db.get().collection(collection.CART_COLLECTS).deleteOne({user:ObjectId(userId)})
               
 
-            resolve(response)   //order id
+            resolve()   //order id
          })
         })
 
@@ -313,7 +315,8 @@ module.exports = {
         return new Promise(async(resolve,reject)=>{
             console.log(userId)
             let orders=await db.get().collection(collection.ORDER_COLLECTS).find({user:ObjectId(userId)}).toArray()
-            console.log(orders);
+           console.log(orders);
+          // console.log(req.body)
             resolve(orders)
 
          
@@ -359,6 +362,7 @@ module.exports = {
                 }
 
             ]).toArray()
+            console.log(orderItems)
 
             resolve(orderItems)
         })

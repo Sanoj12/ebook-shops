@@ -18,34 +18,7 @@ function addcartcount(bookId) {    //cart button
 
 
 
-function changeQuantity(cartId, bookId, userId, count) {     //cart count
-    let quantity = parseInt(document.getElementById(bookId).innerHTML)
-    count = parseInt(count)
-    $.ajax({
-        url: '/change-book-quantity',
-        data: {
-            user: userId,
-            cart: cartId,
-            book: bookId,
-            count: count,
-            quantity: quantity
-        },
-        method: 'post',
-        success: ((response) => {
-            if (response.removeBook) {
 
-                alert("product removed from cart")
-                location.reload()
-            } else {
-
-
-                document.getElementById(bookId).innerHTML = quantity + count
-                document.getElementById('total').innerHTML = response.total
-            }
-
-        })
-    })
-}
 
 
 

@@ -22,11 +22,11 @@
                     <td>RS.{{this.book.price}}</td>
                    
                     <td>
-                        <button class="car-item-count mr-3 btn btn-danger" onclick="changeQuantity('{{this._id}}','{{this.book._id }}''{{../user}}',-1)">-</button> 
+                        <button class="car-item-count mr-3 btn btn-danger" onclick="changeQuantity('{{this._id}}','{{this.book._id }}','{{../user._id}}',-1)">-</button> 
                            
                                    <span id="{{this.book._id}}"> {{this.quantity}} </span> 
 
-                         <button class="cart-item-count mr-3 btn btn-danger" onclick="changeQuantity('{{this._id}}','{{this.book._id }}','{{../user}}',1)">+</button>
+                         <button class="cart-item-count mr-3 btn btn-danger" onclick="changeQuantity('{{this._id}}','{{this.book._id }}','{{../user._id}}',1)">+</button>
                     </td>
                     <td>
                         <a href="" class="btn btn-danger mr-3" onclick="removebook('{{this._id}}','{{this.book._id }}')">Remove</a>
@@ -52,9 +52,42 @@
 <style>
     .container{
         height: 100vh;
+        width: 100%;
     }
 </style>
 
+
+<script>
+    function changeQuantity(cartId, bookId, userId, count) {     //cart count
+    let quantity = parseInt(document.getElementById(bookId).innerHTML)
+    count = parseInt(count)
+    $.ajax({
+        url: '/change-book-quantity',
+        data: {
+            user: userId,
+            cart: cartId,
+            book: bookId,
+            count: count,
+            quantity: quantity
+        },
+        method: 'post',
+        success: ((response) => {
+            if (response.removeBook) {
+
+                alert("product removed from cart")
+                location.reload()
+            } else {
+
+
+                document.getElementById(bookId).innerHTML = quantity + count
+                document.getElementById('total').innerHTML = response.total
+            }
+
+        })
+    })
+}
+
+</script>
 
 
 {{>footer}}
